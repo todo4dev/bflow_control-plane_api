@@ -1,8 +1,8 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow/control-plane/api/core/common"
-	"github.com/todo4dev/bflow/control-plane/api/core/doc"
+	"github.com/todo4dev/bflow_control-plane_api/core/common"
+	"github.com/todo4dev/bflow_control-plane_api/core/doc"
 )
 
 const (

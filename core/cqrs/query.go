@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/todo4dev/bflow/control-plane/api/core/di"
+	"github.com/todo4dev/bflow_control-plane_api/core/di"
 )
 
 var (

@@ -1,4 +1,4 @@
-module github.com/todo4dev/bflow/control-plane/api
+module github.com/todo4dev/bflow_control-plane_api
 
 go 1.25
 
