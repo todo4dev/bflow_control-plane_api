@@ -1,8 +1,8 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow_control-plane_api/core/common"
-	"github.com/todo4dev/bflow_control-plane_api/core/doc"
+	"src/core/common"
+	"src/core/doc"
 )
 
 const (
@@ -23,8 +23,7 @@ func NewForbiddenException() *ForbiddenException {
 
 func init() {
 	forbiddenException := NewForbiddenException()
-	doc.Describe(
-		forbiddenException,
+	doc.Describe(forbiddenException,
 		doc.Description("The authenticated user does not have permission to perform this operation"),
 		doc.Field(
 			&forbiddenException.Code,

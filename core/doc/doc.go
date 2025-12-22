@@ -268,7 +268,7 @@ func resolveFieldNameRecursive(structValue reflect.Value, targetAddr uintptr) st
 				return field.Name + "." + subName
 			}
 
-		case reflect.Ptr:
+		case reflect.Pointer:
 			if !fieldValue.IsNil() && fieldValue.Elem().Kind() == reflect.Struct {
 				if subName := resolveFieldNameRecursive(fieldValue.Elem(), targetAddr); subName != "" {
 					if field.Anonymous {

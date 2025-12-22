@@ -1,8 +1,8 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow_control-plane_api/core/common"
-	"github.com/todo4dev/bflow_control-plane_api/core/doc"
+	"src/core/common"
+	"src/core/doc"
 )
 
 const (
@@ -23,8 +23,7 @@ func NewValidationException() *ValidationException {
 
 func init() {
 	validationException := NewValidationException()
-	doc.Describe(
-		&validationException,
+	doc.Describe(validationException,
 		doc.Description("The request contains invalid or malformed data"),
 		doc.Example(validationException),
 		doc.Field(

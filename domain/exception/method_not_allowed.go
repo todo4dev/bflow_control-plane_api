@@ -1,8 +1,8 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow_control-plane_api/core/common"
-	"github.com/todo4dev/bflow_control-plane_api/core/doc"
+	"src/core/common"
+	"src/core/doc"
 )
 
 const (
@@ -23,8 +23,7 @@ func NewMethodNotAllowedException() *MethodNotAllowedException {
 
 func init() {
 	methodNotAllowedException := NewMethodNotAllowedException()
-	doc.Describe(
-		methodNotAllowedException,
+	doc.Describe(methodNotAllowedException,
 		doc.Description("HTTP method is not allowed for the requested resource"),
 		doc.Field(
 			&methodNotAllowedException.Code,

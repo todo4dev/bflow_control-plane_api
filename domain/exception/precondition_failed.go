@@ -1,8 +1,8 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow_control-plane_api/core/common"
-	"github.com/todo4dev/bflow_control-plane_api/core/doc"
+	"src/core/common"
+	"src/core/doc"
 )
 
 const (
@@ -23,8 +23,7 @@ func NewPreconditionFailedException() *PreconditionFailedException {
 
 func init() {
 	preconditionFailedException := NewPreconditionFailedException()
-	doc.Describe(
-		&preconditionFailedException,
+	doc.Describe(preconditionFailedException,
 		doc.Description("One or more preconditions required for this operation were not met"),
 		doc.Example(preconditionFailedException),
 		doc.Field(

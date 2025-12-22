@@ -1,8 +1,8 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow_control-plane_api/core/common"
-	"github.com/todo4dev/bflow_control-plane_api/core/doc"
+	"src/core/common"
+	"src/core/doc"
 )
 
 const (
@@ -23,8 +23,7 @@ func NewUnprocessableEntityException() *UnprocessableEntityException {
 
 func init() {
 	unprocessableEntityException := NewUnprocessableEntityException()
-	doc.Describe(
-		&unprocessableEntityException,
+	doc.Describe(unprocessableEntityException,
 		doc.Description("The request was well-formed but contains semantic errors and could not be processed"),
 		doc.Example(unprocessableEntityException),
 		doc.Field(

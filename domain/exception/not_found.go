@@ -1,8 +1,8 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow_control-plane_api/core/common"
-	"github.com/todo4dev/bflow_control-plane_api/core/doc"
+	"src/core/common"
+	"src/core/doc"
 )
 
 const (
@@ -23,8 +23,7 @@ func NewNotFoundException() *NotFoundException {
 
 func init() {
 	notFoundException := NewNotFoundException()
-	doc.Describe(
-		&notFoundException,
+	doc.Describe(notFoundException,
 		doc.Description("The requested resource could not be found"),
 		doc.Example(notFoundException),
 		doc.Field(

@@ -1,8 +1,8 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow_control-plane_api/core/common"
-	"github.com/todo4dev/bflow_control-plane_api/core/doc"
+	"src/core/common"
+	"src/core/doc"
 )
 
 const (
@@ -23,8 +23,7 @@ func NewUnauthorizedException() *UnauthorizedException {
 
 func init() {
 	unauthorizedException := NewUnauthorizedException()
-	doc.Describe(
-		&unauthorizedException,
+	doc.Describe(unauthorizedException,
 		doc.Description("Authentication is required or the provided credentials are invalid"),
 		doc.Field(
 			&unauthorizedException.Code,

@@ -1,9 +1,9 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow_control-plane_api/core/doc"
+	"src/core/doc"
 
-	"github.com/todo4dev/bflow_control-plane_api/core/common"
+	"src/core/common"
 )
 
 const (
@@ -24,8 +24,7 @@ func NewConflictException() *ConflictException {
 
 func init() {
 	conflictException := NewConflictException()
-	doc.Describe(
-		&conflictException,
+	doc.Describe(conflictException,
 		doc.Description("Request could not be completed due to a conflict with the current state of the resource"),
 		doc.Example(conflictException),
 		doc.Field(

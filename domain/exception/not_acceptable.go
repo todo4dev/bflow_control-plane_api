@@ -1,8 +1,8 @@
 package exception
 
 import (
-	"github.com/todo4dev/bflow_control-plane_api/core/common"
-	"github.com/todo4dev/bflow_control-plane_api/core/doc"
+	"src/core/common"
+	"src/core/doc"
 )
 
 const (
@@ -23,8 +23,7 @@ func NewNotAcceptableException() *NotAcceptableException {
 
 func init() {
 	notAcceptableException := NewNotAcceptableException()
-	doc.Describe(
-		&notAcceptableException,
+	doc.Describe(notAcceptableException,
 		doc.Description("Requested representation cannot be served (content negotiation failed)"),
 		doc.Field(
 			&notAcceptableException.Code,
