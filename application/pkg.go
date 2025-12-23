@@ -1,7 +1,7 @@
 package application
 
-import (
-	_ "src/application/usecase/auth/command"
-	_ "src/application/usecase/auth/query"
-	_ "src/application/usecase/system/query"
-)
+import "src/application/usecase"
+
+func Register() {
+	usecase.Register()
+}

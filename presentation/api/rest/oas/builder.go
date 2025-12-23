@@ -3,7 +3,7 @@ package oas
 import (
 	"net/http"
 	"reflect"
-	"src/core/doc"
+	"src/core/meta"
 	"src/domain/exception"
 	"strings"
 	"time"
@@ -15,7 +15,7 @@ type BuildSchema struct {
 	schema *Schema
 }
 
-func ObjectMetadata(metadata *doc.ObjectMetadata) *Schema {
+func ObjectMetadata(metadata *meta.ObjectMetadata) *Schema {
 	if metadata == nil || metadata.Type == nil {
 		return Object()
 	}
@@ -433,13 +433,13 @@ func (b *BuildResponse) Build() *Response {
 //
 // Ele procura o primeiro Throws, resolve a StructMetadata do tipo de erro
 // (ex: exception.InternalException) e usa isso como schema + example.
-func (b *BuildResponse) ThrowsFromMetadata(metadata *doc.ObjectMetadata) *BuildResponse {
+func (b *BuildResponse) ThrowsFromMetadata(metadata *meta.ObjectMetadata) *BuildResponse {
 	if metadata == nil || len(metadata.Throws) == 0 {
 		return b
 	}
 
 	throws := metadata.Throws[0]
-	exceptionMeta := doc.GetObjectMetadataByType(throws.ErrorType)
+	exceptionMeta := meta.GetObjectMetadataByType(throws.ErrorType)
 
 	description := throws.Description
 	if description == "" {
@@ -614,8 +614,8 @@ func (b *BuildOperation) Response(statusCode int, fn func(*BuildResponse)) *Buil
 	b.operation.Responses[statusCode] = builder.Build()
 
 	// 500
-	internalMetadata := doc.GetObjectMetadataAs[exception.InternalException]()
-	internalSchema := Struct(reflect.New(reflect.TypeOf(exception.InternalException{})).Elem().Interface())
+	internalMetadata := meta.GetObjectMetadataAs[exception.Internal]()
+	internalSchema := Struct(reflect.New(reflect.TypeOf(exception.Internal{})).Elem().Interface())
 	b.operation.Responses[http.StatusInternalServerError] = NewResponse().
 		Description(internalMetadata.Description).
 		Content(ContentType_ApplicationJson, func(m *BuildMediaType) { m.Schema(internalSchema).Example(internalMetadata.Example) }).

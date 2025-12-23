@@ -41,16 +41,10 @@ func NewServer(config *core.Config) *Server {
 
 			ctx := core.NewFiberHttpContext(c)
 			logger := di.Resolve[logger.ILoggerAdapter]()
-			logger.Error(err.Error(), map[string]any{
-				"method": c.Method(),
-				"path":   c.Path(),
-			})
-
+			logger.Error(err.Error(), map[string]any{"method": c.Method(), "path": c.Path()})
 			status := core.GetHTTPStatus(err)
 
-			return ctx.JSON(status, map[string]any{
-				"error": err.Error(),
-			})
+			return ctx.JSON(status, map[string]any{"error": err.Error()})
 		},
 	})
 
@@ -103,14 +97,14 @@ func (s *Server) loadControllers() {
 		router := controller.Router()
 		for _, r := range router.Routes {
 			route := r
-			fullPath := path.Clean(s.Config.BasePath + router.BasePath + route.Path)
-			route.Path = fullPath
+			route.Path = path.Clean(s.Config.BasePath + route.Path)
 			routes = append(routes, route)
 			s.registerRoute(route)
 		}
 	}
 
 	s.routes = routes
+
 }
 
 func (s *Server) registerRoute(route core.Route) {
@@ -119,7 +113,7 @@ func (s *Server) registerRoute(route core.Route) {
 
 		for _, guard := range route.Guards {
 			if err := guard(ctx); err != nil {
-				return err // cai no ErrorHandler global
+				return err
 			}
 		}
 

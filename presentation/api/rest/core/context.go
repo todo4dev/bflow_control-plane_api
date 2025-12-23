@@ -2,6 +2,7 @@ package core
 
 import (
 	"context"
+	"net/url"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -45,7 +46,8 @@ func (c *fiberHttpContext) Path() string {
 }
 
 func (c *fiberHttpContext) Param(name string) string {
-	return c.ctx.Params(name)
+	val, _ := url.QueryUnescape(c.ctx.Params(name))
+	return val
 }
 
 func (c *fiberHttpContext) Query(name string) string {

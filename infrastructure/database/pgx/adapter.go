@@ -17,6 +17,8 @@ import (
 	"src/application/adapter/database"
 	"src/core/builder"
 	"src/core/common"
+
+	_ "src/infrastructure/database/pgx/repository"
 )
 
 // #region queryRunner
@@ -467,10 +469,7 @@ func NewPgxDatabaseAdapter(databaseConfig *database.DatabaseConfig) *PgxDatabase
 
 	return &PgxDatabaseAdapter{
 		pool: pool,
-		exec: &pgxExecutor{
-			config: databaseConfig,
-			runner: pool,
-		},
+		exec: &pgxExecutor{config: databaseConfig, runner: pool},
 	}
 }
 

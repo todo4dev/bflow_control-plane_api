@@ -1,0 +1,78 @@
+package controller
+
+import (
+	"net/http"
+	"src/application/usecase/auth/query"
+	"src/core/cqrs"
+	"src/core/di"
+	"src/core/doc"
+	"src/domain/exception"
+	"src/presentation/api/rest/core"
+	"src/presentation/api/rest/interceptor"
+	"src/presentation/api/rest/oas"
+)
+
+type AuthController struct {
+	tags string
+}
+
+var _ core.IRestController = (*AuthController)(nil)
+
+func NewAuthController() *AuthController {
+	return &AuthController{tags: "Auth"}
+}
+
+func (c *AuthController) Router() core.Router {
+	return core.NewRouter().PrefixPath("/auth").
+		Push(c.HeadCheckEmailInUse())
+}
+
+// PUT /activate
+
+// PATCH /activate
+
+func (c *AuthController) HeadCheckEmailInUse() *core.RouteBuilder {
+	metadata := doc.GetObjectMetadataAs[query.CheckEmailInUseQuery]()
+	return core.NewRoute().Head("/check/email/:email").
+		OperationId("CheckEmailInUse").Tags(c.tags).
+		Summary("Check email in use").Description("Check email in use").
+		PathParameter(func(b *oas.BuildParameter) {
+			b.Name("email").
+				Description("Email").
+				Example(&metadata.Example.(*query.CheckEmailInUseQuery).Email)
+		}).
+		Response(http.StatusNoContent, func(r *oas.BuildResponse) {
+			r.Description("Email can be used").
+				Content(oas.ContentType_ApplicationJson, func(m *oas.BuildMediaType) {
+					m.Schema(oas.ObjectMetadata(metadata)).Example(metadata.Example)
+				})
+		}).
+		ResponseThrowsFromMetadata(metadata).
+		Handler(func(ctx core.HttpContext) error {
+			q := query.CheckEmailInUseQuery{Email: ctx.Param("email")}
+			if err := q.Validate(); err != nil {
+				return ctx.JSON(http.StatusBadRequest, exception.NewValidationException().WithMessage(err.Error()))
+			}
+			_ = cqrs.MustExecuteQuery[any](ctx.Context(), q)
+			return ctx.JSON(http.StatusNoContent, nil)
+		}).
+		UseInterceptors(interceptor.LoggingInterceptor())
+}
+
+// GET /login/:provider
+
+// GET /login/:provider/callback
+
+// GET /login/:provider/token
+
+// POST /login
+
+// PUT /password
+
+// PATCH /password
+
+// POST /register
+
+func init() {
+	di.RegisterAs[core.IRestController](NewAuthController)
+}

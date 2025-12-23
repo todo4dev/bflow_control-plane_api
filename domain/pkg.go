@@ -1,5 +1,9 @@
 package domain
 
 import (
-	_ "src/domain/exception"
+	"src/domain/exception"
 )
+
+func Register() {
+	exception.Register()
+}

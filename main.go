@@ -19,7 +19,7 @@ import (
 func main() {
 	env.Load("./.env", "../.env")
 
-	cqrs.MustExecuteQuery[query.HealthQueryResult](context.Background(), &query.HealthQuery{})
+	cqrs.MustExecuteQuery[query.HealthcheckQueryResult](context.Background(), &query.HealthcheckQuery{})
 
 	logger := di.Resolve[logger.ILoggerAdapter]()
 	server := di.Resolve[*api.Server]()
